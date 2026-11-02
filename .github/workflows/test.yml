@@ -1,0 +1,19 @@
+name: Neural shell tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check JavaScript syntax
+        run: |
+          node --check engine.js
+          node --check app.js
+      - name: Verify story, filesystem and persistence format
+        run: node --test tests/engine.test.cjs
